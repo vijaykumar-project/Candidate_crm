@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>HR Login</title>
+    <style>
+        :root {
+            --primary-color: #2575fc;
+            --secondary-color: #6a11cb;
+            --text-color-primary: #333;
+            --text-color-secondary: #555;
+            --background-light: #f9f9f9;
+            --border-color: #ddd;
+            --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            --border-radius: 10px;
+            --transition-duration: 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .login-container {
+            background: var(--background-light);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 400px;
+            max-width: 90%;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            margin-bottom: 30px;
+            font-size: 28px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--text-color-primary);
+            letter-spacing: 0.8px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-size: 15px;
+            color: var(--text-color-secondary);
+            margin-bottom: 10px;
+            display: block;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: border-color var(--transition-duration) ease-in-out;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 2px 4px rgba(var(--primary-color-rgb, 37, 117, 252), 0.15);
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle input[type="password"] {
+            padding-right: 40px; /* Make space for the icon */
+        }
+
+        .password-toggle i {
+            position: absolute;
+            top: 70%;
+            right: 15px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-color-secondary);
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-color);
+            border: none;
+            color: #fff;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 600;
+            transition: background-color var(--transition-duration) ease-in-out, box-shadow var(--transition-duration) ease-in-out;
+            box-shadow: 0 4px 8px rgba(var(--primary-color-rgb, 37, 117, 252), 0.2);
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            box-shadow: 0 6px 12px rgba(var(--secondary-color-rgb, 106, 17, 203), 0.2);
+        }
+
+        .form-footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-color-secondary);
+        }
+
+        .form-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-duration) ease-in-out;
+        }
+
+        .form-footer a:hover {
+            color: var(--secondary-color);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>HR Login</h2>
+        <form action="/do-login" method="post">
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="input-group password-toggle">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <i class="fas fa-eye" id="togglePassword"></i>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordInput = document.querySelector('#password');
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function (e) {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+    </script>
+</body>
+</html>

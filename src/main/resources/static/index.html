@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Candidate Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="welcome-container">
+  <div id ="nameContainer">
+    <h2>Welcome 
+        <div class="hover-wrapper">
+            <span id="username">Loading...</span>
+            <button id="logoutButton" onclick="logout()">Logout</button>
+        </div>
+    </h2>
+  </div>
+</div>
+
+<div class="container">
+
+  <h2>Candidate Registration</h2>
+
+  <form id="candidateForm">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" placeholder="Name">
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Email">
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone" placeholder="Phone">
+    </div>
+    <div class="form-group">
+      <label for="jobRole">Job Role:</label>
+      <input type="text" id="jobRole" placeholder="Job Role">
+    </div>
+    <div class="form-group">
+      <label for="resumeLink">Resume:</label>
+      <input type="file" id="resumeLink" accept=".pdf">
+    </div>
+    <div class="form-group">
+      <label for="profilePicContainer">Profile Picture:</label>
+      <input type="file" id="profilePicContainer" accept="image/*">
+    </div>
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status">
+        <option value="Applied">Applied</option>
+        <option value="Interview Scheduled">Interview Scheduled</option>
+        <option value="Selected">Selected</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="interviewDate">Interview Date:</label>
+      <input type="date" id="interviewDate">
+    </div>
+    <div class="form-group">
+      <label for="notes">Notes:</label>
+      <input type="text" id="notes" placeholder="Notes">
+    </div>
+    <div class="form-group">
+      <button type="button" onclick="addCandidate()">Add</button>
+    </div>
+  </form>
+
+  <!-- Loading Spinner (Initially Hidden) -->
+  <div id="loadingSpinner" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:9999;">
+  <div class="sk-cube-grid">
+  <div class="sk-cube sk-cube1"></div>
+  <div class="sk-cube sk-cube2"></div>
+  <div class="sk-cube sk-cube3"></div>
+  <div class="sk-cube sk-cube4"></div>
+  <div class="sk-cube sk-cube5"></div>
+  <div class="sk-cube sk-cube6"></div>
+  <div class="sk-cube sk-cube7"></div>
+  <div class="sk-cube sk-cube8"></div>
+  <div class="sk-cube sk-cube9"></div>
+</div>
+  </div>
+
+  <!-- Success/Error Modal -->
+ <div id="toast-container"></div>
+
+  <h3>Candidates</h3>
+  <table id="candidateTable">
+    <thead>
+      <tr>
+        <th>Profile Image</th>
+        <th>Candidate Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <input type="hidden" id="currentCandidateId">
+
+  <!-- Update Modal -->
+  <div id="updateModal" style="display:none;">
+    <h3>Candidate Logs</h3>
+    <ul id="log-list"></ul>
+
+    <textarea id="log-note" placeholder="Write note here..."></textarea>
+
+    <div class="form-group">
+      <select id="log-action" class="input-field">
+        <option value="Mail Sent">Mail Sent</option>
+        <option value="Called">Called</option>
+        <option value="Attended">Attended</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button onclick="addLog()" class="btn">Add Log</button>
+      <button onclick="closeUpdateModal()" class="btn">Close</button>
+    </div>
+  </div>
+
+  <!-- Modal for Full Size Profile Image -->
+  <div id="modal" class="modal">
+    <span id="closeModal" class="close">&times;</span>
+    <img id="fullSizeImage" class="modal-content" />
+    <div id="caption"></div>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+
+</html>
