@@ -372,7 +372,7 @@ function showToast(message, type) {
     setTimeout(() => {	
         toast.remove();
 		location.reload();  
-    }, 3000);
+    }, 1000);
 }
 
 function showLoading() {
