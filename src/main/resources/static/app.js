@@ -396,4 +396,95 @@ window.onload = function() {
     }, 500); // Adjust the delay time (3000ms = 3 seconds)
 };
 // Load candidates on page load and show profile pictures
+// Function to perform the search
+function searchCandidates() {
+  const name = document.getElementById('searchName').value;
+  const status = document.getElementById('searchStatus').value;
+
+  const searchParams = new URLSearchParams();
+  if (name) searchParams.append('name', name);
+  if (status) searchParams.append('status', status);
+
+  const url = '/api/candidates?' + searchParams.toString(); // Replace with your API endpoint
+
+  // Display loading spinner
+  document.getElementById('loadingSpinner').style.display = 'block';
+
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json(); // Parse JSON if the response is okay
+    })
+    .then(data => {
+      // Clear the existing table rows
+      const tableBody = document.getElementById('candidateTable').querySelector('tbody');
+      tableBody.innerHTML = '';
+
+      // If no candidates, show a message
+      if (data.length === 0) {
+        const row = tableBody.insertRow();
+        const cell = row.insertCell(0);
+        cell.colSpan = 6;
+        cell.textContent = 'No candidates found!';
+        return;
+      }
+
+      // Populate the table with new data
+      data.forEach(candidate => {
+        const row = tableBody.insertRow();
+
+        // Profile image cell
+        const profileImageCell = row.insertCell(0);
+        const profileImage = document.createElement('img');
+        profileImage.src = `/api/candidates/${candidate.id}/profilePic`; // Adjust if needed
+        profileImage.alt = candidate.name;
+        profileImage.width = 50; // Adjust size
+        profileImageCell.appendChild(profileImage);
+
+        // Candidate ID cell
+        const idCell = row.insertCell(1);
+        idCell.textContent = candidate.id;
+
+        // Name cell
+        const nameCell = row.insertCell(2);
+        nameCell.textContent = candidate.name;
+
+        // Email cell
+        const emailCell = row.insertCell(3);
+        emailCell.textContent = candidate.email;
+
+        // Status cell
+        const statusCell = row.insertCell(4);
+        statusCell.textContent = candidate.status;
+
+        // Actions cell (edit, delete buttons, etc.)
+        const actionsCell = row.insertCell(5);
+        actionsCell.innerHTML = `
+          <button onclick="viewCandidate(${candidate.id})">View</button>
+          <button onclick="deleteCandidate(${candidate.id})">Delete</button>
+        `;
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching candidates:', error);
+      alert('An error occurred while fetching candidates.');
+    })
+    .finally(() => {
+      // Hide loading spinner
+      document.getElementById('loadingSpinner').style.display = 'none';
+    });
+}
+
+
+// Function to handle the view candidate action (example)
+function viewCandidate(id) {
+    console.log('Viewing candidate with id:', id);
+}
+
+// Function to handle the edit candidate action (example)
+function editCandidate(id) {
+    console.log('Editing candidate with id:', id);
+}
 

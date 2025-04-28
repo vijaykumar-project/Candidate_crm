@@ -13,4 +13,5 @@ public interface CandidateService {
     Candidate updateCandidateStatus(Long id, String newStatus);
     boolean existsByEmail(String email);
     boolean existsByPhone(String phone);
+    
 }
